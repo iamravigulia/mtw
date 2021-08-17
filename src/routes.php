@@ -1,11 +1,11 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-Route::get('greeting', function () {
-    return 'Hi, this is your awesome package! lamas';
-});
+// Route::get('greeting', function () {
+//     return 'Hi, this is your awesome package! lamas';
+// });
 
-Route::get('lamas/test', 'EdgeWizz\lamas\Controllers\lamasController@test')->name('test');
+// Route::get('lamas/test', 'EdgeWizz\lamas\Controllers\lamasController@test')->name('test');
 
 Route::post('fmt/lamas/store', 'EdgeWizz\Lamas\Controllers\LamasController@store')->name('fmt.lamas.store');
 Route::post('fmt/lamas/update/{id}', 'EdgeWizz\Lamas\Controllers\LamasController@update')->name('fmt.lamas.update');
