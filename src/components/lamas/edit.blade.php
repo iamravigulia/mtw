@@ -48,6 +48,10 @@
                         <label class="fmt_label" for="">Question audio</label>
                         <input class="fmt_input" type="file" accept="audio/*" name="question_media" placeholder="Question">
                     </div>
+                    <div>
+                        <label class="fmt_label" for="">Question audio</label>
+                        <input class="fmt_input" type="file" accept="audio/*" name="question_media_es" placeholder="Question">
+                    </div>
                     <div class="my-2">
                         <label class="bloc" for="">Difficulty Level</label>
                         @php $d_levels = DB::table('difficulty_levels')->get(); @endphp

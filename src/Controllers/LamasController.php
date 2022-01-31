@@ -15,9 +15,18 @@ class LamasController extends Controller
         $mofQ->difficulty_level_id = $request->difficulty_level_id;
         $mofQ->format_title = $request->format_title;
         $ques_media = new Media();
-        $request->question_media->storeAs('public/answers', time().$request->question_media->getClientOriginalName());
-        $ques_media->url = 'answers/'.time().$request->question_media->getClientOriginalName();
+        $name = time().$request->question_media->getClientOriginalName();
+        $request->question_media->storeAs('public/answers', $name);
+        $ques_media->url = 'answers/'.$name;
         $ques_media->save();
+        if($request->question_media_es){
+            $ques_media_es = new Media();
+            $name_es = time().$request->question_media_es->getClientOriginalName();
+            $request->question_media_es->storeAs('public/answers', $name_es);
+            $ques_media_es->url = 'answers/'.$name_es;
+            $ques_media_es->save();
+            $mofQ->media_id_es = $ques_media_es->id;
+        }
         $mofQ->media_id = $ques_media->id;
         // $mofQ->level = $request->question_level;
         // $mofQ->score = $request->question_score;
@@ -105,6 +114,14 @@ class LamasController extends Controller
             $ques_media->save();
             $q->media_id = $ques_media->id;
         }
+        if($request->question_media_es){
+            $ques_media_es = new Media();
+            $name_es = time().$request->question_media_es->getClientOriginalName();
+            $request->question_media_es->storeAs('public/answers', $name_es);
+            $ques_media_es->url = 'answers/'.$name_es;
+            $ques_media_es->save();
+            $q->media_id_es = $ques_media_es->id;
+        }
         // $q->level = $request->question_level;
         // $q->score = $request->question_score;
         $q->hint = $request->hint;
@@ -146,9 +163,10 @@ class LamasController extends Controller
             $uploadImage = explode(".", $valueImage->getClientOriginalName());
             if($uploadImage[0] == $question_image){
                 // dd($valueImage);
+                $name = time(). uniqid() . $valueImage->getClientOriginalName();
                 $media = new Media();
-                $valueImage->storeAs('public/question_images', time() . $valueImage->getClientOriginalName());
-                $media->url = 'question_images/' . time() . $valueImage->getClientOriginalName();
+                $valueImage->storeAs('public/question_images', $name);
+                $media->url = 'question_images/' . $name;
                 $media->save();
                 return $media->id;
             }
@@ -157,6 +175,7 @@ class LamasController extends Controller
     public function csv_upload(Request $request){
         $file = $request->file('file');
         $audio = $request->file('audio');
+        $audio_es = $request->file('audio_es');
         // dd($file);
         // File Details
         $filename = time() . $file->getClientOriginalName();
@@ -219,6 +238,7 @@ class LamasController extends Controller
                         "eng_word6"         => $importData[19],
                         "level"             => $importData[20],
                         "comment"           => $importData[21],
+                        "media_es"          => $importData[22],
                     );
                     // var_dump($insertData['answer1']);
                     /*  */
@@ -231,6 +251,10 @@ class LamasController extends Controller
                         if (!empty($insertData['question_media']) && $insertData['question_media'] != '') {
                             $media_id = $this->imagecsv($insertData['question_media'], $audio);
                             $fill_Q->media_id = $media_id;
+                        }
+                        if (!empty($insertData['media_es']) && $insertData['media_es'] != '') {
+                            $media_id_es = $this->imagecsv($insertData['media_es'], $audio_es);
+                            $fill_Q->media_id_es = $media_id_es;
                         }
                         if(!empty($insertData['level'])){
                             if($insertData['level'] == 'easy'){
