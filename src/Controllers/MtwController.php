@@ -4,14 +4,14 @@ namespace edgewizz\lamas\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use Edgewizz\Edgecontent\Models\ProblemSetQues;
-use Edgewizz\Lamas\Models\LamasAns;
-use Edgewizz\Lamas\Models\LamasQues;
+use Edgewizz\Mtw\Models\MtwAns;
+use Edgewizz\Mtw\Models\MtwQues;
 use Illuminate\Http\Request;
 
-class LamasController extends Controller
+class MtwController extends Controller
 {
     public function store(Request $request){
-        $mofQ = new LamasQues();
+        $mofQ = new MtwQues();
         $mofQ->difficulty_level_id = $request->difficulty_level_id;
         $mofQ->format_title = $request->format_title;
         $ques_media = new Media();
@@ -32,66 +32,21 @@ class LamasController extends Controller
         // $mofQ->score = $request->question_score;
         $mofQ->hint = $request->hint;
         $mofQ->save();
-        /* answer1 */
-        if($request->answer1){
-            $ans1 = new LamasAns();
-            $ans1->question_id = $mofQ->id;
-            $ans1->answer = $request->answer1;
-            $ans1->arrange = $request->arrange1;
-            $ans1->eng_word = $request->eng_word1;
-            $ans1->save();
+        for ($i=0; $i <=6; $i++) { 
+            # code...
+            $answer = 'answer'.$i;
+            $arrange = 'arrange'.$i;
+            $eng_word = 'eng_word'.$i;
+            if($request->$answer){
+                $ans1 = new MtwAns();
+                $ans1->question_id = $mofQ->id;
+                $ans1->answer = $request->$answer;
+                $ans1->arrange = $request->$arrange;
+                $ans1->eng_word = $request->$eng_word;
+                $ans1->save();
+            }
         }
         /* answer1 */
-        /* answer2 */
-        if($request->answer2){
-            $ans2 = new LamasAns();
-            $ans2->question_id = $mofQ->id;
-            $ans2->answer = $request->answer2;
-            $ans2->arrange = $request->arrange2;
-            $ans2->eng_word = $request->eng_word2;
-            $ans2->save();
-        }
-        /* answer2 */
-        /* answer3 */
-        if($request->answer3){
-            $ans3 = new LamasAns();
-            $ans3->question_id = $mofQ->id;
-            $ans3->answer = $request->answer3;
-            $ans3->arrange = $request->arrange3;
-            $ans3->eng_word = $request->eng_word3;
-            $ans3->save();
-        }
-        /* answer3 */
-        /* answer4 */
-        if($request->answer4){
-            $ans4 = new LamasAns();
-            $ans4->question_id = $mofQ->id;
-            $ans4->answer = $request->answer4;
-            $ans4->arrange = $request->arrange4;
-            $ans4->eng_word = $request->eng_word4;
-            $ans4->save();
-        }
-        /* answer4 */
-        /* answer5 */
-        if($request->answer5){
-            $ans5 = new LamasAns();
-            $ans5->question_id = $mofQ->id;
-            $ans5->answer = $request->answer5;
-            $ans5->arrange = $request->arrange5;
-            $ans5->eng_word = $request->eng_word5;
-            $ans5->save();
-        }
-        /* answer5 */
-        /* answer6 */
-        if($request->answer6){
-            $ans6 = new LamasAns();
-            $ans6->question_id = $mofQ->id;
-            $ans6->answer = $request->answer6;
-            $ans6->arrange = $request->arrange6;
-            $ans6->eng_word = $request->eng_word6;
-            $ans6->save();
-        }
-        /* answer6 */
         if($request->problem_set_id && $request->format_type_id){
             $pbq = new ProblemSetQues();
             $pbq->problem_set_id = $request->problem_set_id;
@@ -102,7 +57,7 @@ class LamasController extends Controller
         return back();
     }
     public function update($id, Request $request){
-        $q = LamasQues::where('id', $id)->first();
+        /* $q = MtwQues::where('id', $id)->first();
         $q->difficulty_level_id = $request->difficulty_level_id;
         if($request->format_title){
             $q->format_title = $request->format_title;
@@ -126,7 +81,7 @@ class LamasController extends Controller
         // $q->score = $request->question_score;
         $q->hint = $request->hint;
         $q->save();
-        $answers = LamasAns::where('question_id', $q->id)->get();
+        $answers = MtwAns::where('question_id', $q->id)->get();
         foreach($answers as $ans){
             if($request->ans.$ans->id){
                 $inputAnswer = 'answer'.$ans->id;
@@ -142,16 +97,16 @@ class LamasController extends Controller
                 $ans->save();
             }
         }
-        return back();
+        return back(); */
     }
 
     public function delete($id){
-        $f = LamasQues::where('id', $id)->first();
+        $f = MtwQues::where('id', $id)->first();
         $f->delete();
-        $ans = LamasAns::where('question_id', $f->id)->pluck('id');
+        $ans = MtwAns::where('question_id', $f->id)->pluck('id');
         if($ans){
             foreach($ans as $a){
-                $f_ans = LamasAns::where('id', $a)->first();
+                $f_ans = MtwAns::where('id', $a)->first();
                 $f_ans->delete();
             }
         }
@@ -192,7 +147,7 @@ class LamasController extends Controller
             // Check file size
             if ($fileSize <= $maxFileSize) {
                 // File upload location
-                $location = 'uploads/lamas';
+                $location = 'uploads/Mtw';
                 // Upload file
                 $file->move($location, $filename);
                 // Import CSV to Database
@@ -217,7 +172,14 @@ class LamasController extends Controller
                 // Insert to MySQL database
                 foreach ($importData_arr as $importData) {
                     $insertData = array(
-                        "question_media"    => $importData[1],
+                        "question"          => $importData[1],
+                        "word1"             => $importData[1],
+                        "word2"             => $importData[1],
+                        "word3"             => $importData[1],
+                        "word4"             => $importData[1],
+                        "word5"             => $importData[1],
+                        "word6"             => $importData[1],
+                        "word1"             => $importData[1],
                         "answer1"           => $importData[2],
                         "arrange1"          => $importData[3],
                         "eng_word1"         => $importData[4],
@@ -238,23 +200,35 @@ class LamasController extends Controller
                         "eng_word6"         => $importData[19],
                         "level"             => $importData[20],
                         "comment"           => $importData[21],
-                        "media_es"          => $importData[22],
                     );
                     // var_dump($insertData['answer1']);
                     /*  */
-                    if ($insertData['question_media']) {
-                        $fill_Q = new LamasQues();
+                    if ($insertData['question']) {
+                        $fill_Q = new MtwQues();
                         // $fill_Q->question = $insertData['question'];
                         if($request->format_title){
                             $fill_Q->format_title = $request->format_title;
                         }
-                        if (!empty($insertData['question_media']) && $insertData['question_media'] != '') {
-                            $media_id = $this->imagecsv($insertData['question_media'], $audio);
-                            $fill_Q->media_id = $media_id;
+                        if ($insertData['question'] && $insertData['question'] != '-') {
+                            $fill_Q->question = $insertData['question'];
                         }
-                        if (!empty($insertData['media_es']) && $insertData['media_es'] != '') {
-                            $media_id_es = $this->imagecsv($insertData['media_es'], $audio_es);
-                            $fill_Q->media_id_es = $media_id_es;
+                        if ($insertData['word1'] && $insertData['word1'] != '-') {
+                            $fill_Q->word1 = $insertData['word1'];
+                        }
+                        if ($insertData['word2'] && $insertData['word2'] != '-') {
+                            $fill_Q->word2 = $insertData['word2'];
+                        }
+                        if ($insertData['word3'] && $insertData['word3'] != '-') {
+                            $fill_Q->word3 = $insertData['word3'];
+                        }
+                        if ($insertData['word4'] && $insertData['word4'] != '-') {
+                            $fill_Q->word4 = $insertData['word4'];
+                        }
+                        if ($insertData['word5'] && $insertData['word5'] != '-') {
+                            $fill_Q->word5 = $insertData['word5'];
+                        }
+                        if ($insertData['word6'] && $insertData['word6'] != '-') {
+                            $fill_Q->word6 = $insertData['word6'];
                         }
                         if(!empty($insertData['level'])){
                             if($insertData['level'] == 'easy'){
@@ -288,7 +262,7 @@ class LamasController extends Controller
                             
                             if ($f_answer == '-') {
                             } else {
-                                $f_Ans1 = new LamasAns();
+                                $f_Ans1 = new MtwAns();
                                 $f_Ans1->question_id = $fill_Q->id;
                                 $f_Ans1->answer = $f_answer;
                                 $f_Ans1->arrange = $f_arrange;
@@ -299,54 +273,6 @@ class LamasController extends Controller
                                 $f_Ans1->save();
                             }
                         }
-                        /* if ($insertData['answer1'] == '-') {
-                        } else {
-                            $f_Ans1 = new LamasAns();
-                            $f_Ans1->question_id = $fill_Q->id;
-                            $f_Ans1->answer = $insertData['answer1'];
-                            $f_Ans1->arrange = $insertData['arrange1'];
-                            $f_Ans1->save();
-                        }
-                        if ($insertData['answer2'] == '-') {
-                        } else {
-                            $f_Ans2 = new LamasAns();
-                            $f_Ans2->question_id = $fill_Q->id;
-                            $f_Ans2->answer = $insertData['answer2'];
-                            $f_Ans2->arrange = $insertData['arrange2'];
-                            $f_Ans2->save();
-                        }
-                        if ($insertData['answer3'] == '-') {
-                        } else {
-                            $f_Ans3 = new LamasAns();
-                            $f_Ans3->question_id = $fill_Q->id;
-                            $f_Ans3->answer = $insertData['answer3'];
-                            $f_Ans3->arrange = $insertData['arrange3'];
-                            $f_Ans3->save();
-                        }
-                        if ($insertData['answer4'] == '-') {
-                        } else {
-                            $f_Ans4 = new LamasAns();
-                            $f_Ans4->question_id = $fill_Q->id;
-                            $f_Ans4->answer = $insertData['answer4'];
-                            $f_Ans4->arrange = $insertData['arrange4'];
-                            $f_Ans4->save();
-                        }
-                        if ($insertData['answer5'] == '-') {
-                        } else {
-                            $f_Ans5 = new LamasAns();
-                            $f_Ans5->question_id = $fill_Q->id;
-                            $f_Ans5->answer = $insertData['answer5'];
-                            $f_Ans5->arrange = $insertData['arrange5'];
-                            $f_Ans5->save();
-                        }
-                        if ($insertData['answer6'] == '-') {
-                        } else {
-                            $f_Ans6 = new LamasAns();
-                            $f_Ans6->question_id = $fill_Q->id;
-                            $f_Ans6->answer = $insertData['answer6'];
-                            $f_Ans6->arrange = $insertData['arrange6'];
-                            $f_Ans6->save();
-                        } */
                     }
                     /*  */
                 }
@@ -360,13 +286,13 @@ class LamasController extends Controller
         return back();
     }
     public function inactive($id){
-        $f = LamasQues::where('id', $id)->first();
+        $f = MtwQues::where('id', $id)->first();
         $f->active = '0';
         $f->save();
         return back();
     }
     public function active($id){
-        $f = LamasQues::where('id', $id)->first();
+        $f = MtwQues::where('id', $id)->first();
         $f->active = '1';
         $f->save();
         return back();

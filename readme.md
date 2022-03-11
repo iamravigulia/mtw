@@ -1,4 +1,4 @@
-Mof = Meaning of sentences
+mtw = match the word
 
-<x-mof.open />
-<x-mof.index />
+<x-mtw.open />
+<x-mtw.index />

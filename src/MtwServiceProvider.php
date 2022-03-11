@@ -1,11 +1,11 @@
 <?php
 
-namespace edgewizz\lamas;
+namespace edgewizz\mtw;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
-class LamasServiceProvider extends ServiceProvider
+class MtwServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -14,7 +14,7 @@ class LamasServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->make('Edgewizz\Lamas\Controllers\LamasController');
+        $this->app->make('Edgewizz\Mtw\Controllers\MtwController');
     }
 
     /**
@@ -27,9 +27,9 @@ class LamasServiceProvider extends ServiceProvider
         // dd($this);
         $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->loadMigrationsFrom(__DIR__.'/migrations');
-        $this->loadViewsFrom(__DIR__ . '/components', 'lamas');
-        Blade::component('lamas::lamas.open', 'lamas.open');
-        Blade::component('lamas::lamas.index', 'lamas.index');
-        Blade::component('lamas::lamas.edit', 'lamas.edit');
+        $this->loadViewsFrom(__DIR__ . '/components', 'mtw');
+        Blade::component('mtw::mtw.open', 'mtw.open');
+        Blade::component('mtw::mtw.index', 'mtw.index');
+        Blade::component('mtw::mtw.edit', 'mtw.edit');
     }
 }

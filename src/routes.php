@@ -2,17 +2,17 @@
 use Illuminate\Support\Facades\Route;
 
 // Route::get('greeting', function () {
-//     return 'Hi, this is your awesome package! lamas';
+//     return 'Hi, this is your awesome package! mtw';
 // });
 
-// Route::get('lamas/test', 'EdgeWizz\lamas\Controllers\lamasController@test')->name('test');
+// Route::get('mtw/test', 'EdgeWizz\Mtw\Controllers\MtwController@test')->name('test');
 
-Route::post('fmt/lamas/store', 'EdgeWizz\Lamas\Controllers\LamasController@store')->name('fmt.lamas.store');
-Route::post('fmt/lamas/update/{id}', 'EdgeWizz\Lamas\Controllers\LamasController@update')->name('fmt.lamas.update');
-Route::any('fmt/lamas/delete/{id}', 'EdgeWizz\Lamas\Controllers\LamasController@delete')->name('fmt.lamas.delete');
+Route::post('fmt/mtw/store', 'EdgeWizz\Mtw\Controllers\MtwController@store')->name('fmt.mtw.store');
+Route::post('fmt/mtw/update/{id}', 'EdgeWizz\Mtw\Controllers\MtwController@update')->name('fmt.mtw.update');
+Route::any('fmt/mtw/delete/{id}', 'EdgeWizz\Mtw\Controllers\MtwController@delete')->name('fmt.mtw.delete');
 
-Route::post('fmt/lamas/csv', 'EdgeWizz\Lamas\Controllers\LamasController@csv_upload')->name('fmt.lamas.csv');
+Route::post('fmt/mtw/csv', 'EdgeWizz\Mtw\Controllers\MtwController@csv_upload')->name('fmt.mtw.csv');
 
-Route::any('fmt/lamas/inactive/{id}',  'EdgeWizz\Lamas\Controllers\LamasController@inactive')->name('fmt.lamas.inactive');
-Route::any('fmt/lamas/active/{id}',  'EdgeWizz\Lamas\Controllers\LamasController@active')->name('fmt.lamas.active');
+Route::any('fmt/mtw/inactive/{id}',  'EdgeWizz\Mtw\Controllers\MtwController@inactive')->name('fmt.mtw.inactive');
+Route::any('fmt/mtw/active/{id}',  'EdgeWizz\Mtw\Controllers\MtwController@active')->name('fmt.mtw.active');
 

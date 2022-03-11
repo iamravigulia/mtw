@@ -1,17 +1,17 @@
 {
-    "name": "edgewizz/lamas",
+    "name": "edgewizz/mtw",
     "description": "testing",
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Edgewizz\\Lamas\\": "src"
+            "Edgewizz\\Mtw\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Edgewizz\\Lamas\\LamasServiceProvider"
+                "Edgewizz\\Mtw\\MtwServiceProvider"
             ]
         }
     },

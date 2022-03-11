@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLamasQuesTable extends Migration
+class CreateMtwAnsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateLamasQuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fmt_lamas_ques', function (Blueprint $table) {
+        Schema::create('fmt_mtw_ans', function (Blueprint $table) {
             $table->id();
-            $table->longText('question')->nullable();
-            $table->foreignId('media_id')->nullable();
+            $table->foreignId('question_id')->index();
+            $table->longText('answer');
             $table->tinyInteger('active')->default(1);
-            $table->string('hint')->nullable();
-            $table->foreignId('difficulty_level_id')->nullable()->comment = 'id from difficulty_levels table';
+            $table->foreignId('media_id')->index()->nullable();
+            $table->tinyInteger('arrange')->default(0);
+            $table->string('eng_word')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateLamasQuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fmt_lamas_ques');
+        Schema::dropIfExists('fmt_mtw_ans');
     }
 }
