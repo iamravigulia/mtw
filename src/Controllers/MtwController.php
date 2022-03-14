@@ -1,6 +1,6 @@
 <?php
 
-namespace edgewizz\lamas\Controllers;
+namespace edgewizz\mtw\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use Edgewizz\Edgecontent\Models\ProblemSetQues;
