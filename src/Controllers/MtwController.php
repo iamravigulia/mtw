@@ -18,7 +18,7 @@ class MtwController extends Controller
         for ($i = 1; $i <= 6; $i++){
             $word = 'word'.$i;
             if($request->$word){
-                $mofQ->$word = $request->word;
+                $mofQ->$word = $request->$word;
             }
         }
         $mofQ->hint = $request->hint;
