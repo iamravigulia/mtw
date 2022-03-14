@@ -21,6 +21,12 @@ class CreateMtwQuesTable extends Migration
             $table->string('hint')->nullable();
             $table->foreignId('difficulty_level_id')->nullable()->comment = 'id from difficulty_levels table';
             $table->string('format_title')->nullable();
+            $table->string('word1')->nullable();
+            $table->string('word2')->nullable();
+            $table->string('word3')->nullable();
+            $table->string('word4')->nullable();
+            $table->string('word5')->nullable();
+            $table->string('word6')->nullable();
             $table->timestamps();
         });
     }
