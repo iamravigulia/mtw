@@ -14,22 +14,13 @@ class MtwController extends Controller
         $mofQ = new MtwQues();
         $mofQ->difficulty_level_id = $request->difficulty_level_id;
         $mofQ->format_title = $request->format_title;
-        $ques_media = new Media();
-        $name = time().$request->question_media->getClientOriginalName();
-        $request->question_media->storeAs('public/answers', $name);
-        $ques_media->url = 'answers/'.$name;
-        $ques_media->save();
-        if($request->question_media_es){
-            $ques_media_es = new Media();
-            $name_es = time().$request->question_media_es->getClientOriginalName();
-            $request->question_media_es->storeAs('public/answers', $name_es);
-            $ques_media_es->url = 'answers/'.$name_es;
-            $ques_media_es->save();
-            $mofQ->media_id_es = $ques_media_es->id;
+        $mofQ->question = $request->question;
+        for ($i = 1; $i <= 6; $i++){
+            $word = 'word'.$i;
+            if($request->$word){
+                $mofQ->$word = $request->word;
+            }
         }
-        $mofQ->media_id = $ques_media->id;
-        // $mofQ->level = $request->question_level;
-        // $mofQ->score = $request->question_score;
         $mofQ->hint = $request->hint;
         $mofQ->save();
         for ($i=0; $i <=6; $i++) { 

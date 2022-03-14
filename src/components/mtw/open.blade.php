@@ -59,12 +59,14 @@
             <label class="fmt_label" for="">Question</label>
             <input class="fmt_input" type="text" name="question" style="width: 100%;" placeholder="question">
         </div>
+        @for ($i = 1; $i <= 6; $i++)
         <div style="margin: 10px; padding: 10px; border: 1px solid #707070;">
             <div>
-                <label class="fmt_label" for="">word 1</label>
-                <input class="fmt_input" type="text" name="word1" style="width: 100%;" placeholder="word1">
+                <label class="fmt_label" for="">word {{$i}}</label>
+                <input class="fmt_input" type="text" name="word{{$i}}" style="width: 100%;" placeholder="word{{$i}}">
             </div>
         </div>
+        @endfor
         <div>
             <label class="fmt_label" for="">Comment</label>
             <textarea class="fmt_input" type="text" name="hint" placeholder="comment" style="width: 100%;"></textarea>
